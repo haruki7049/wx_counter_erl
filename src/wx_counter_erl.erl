@@ -7,6 +7,7 @@ main(Args) ->
     argparse:run(Args, cli(), #{}).
 
 
+-spec cli() -> argparse:command().
 cli() ->
     #{
       arguments => [#{name => username, type => string}],
@@ -14,5 +15,6 @@ cli() ->
      }.
 
 
+-spec app(Args) -> ok when Args :: map().
 app(#{username := UserName}) ->
     io:format("~p~n", [UserName]).
