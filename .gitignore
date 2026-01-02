@@ -1,0 +1,13 @@
+# Nix
+.direnv/
+result*
+result-*
+
+# Erlang
+/.erlang.mk/
+*.d
+*.dump
+*.plt
+/ebin/
+/deps/
+wx_counter_erl
