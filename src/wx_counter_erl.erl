@@ -1,5 +1,6 @@
 -module(wx_counter_erl).
 -export([main/1]).
+-include_lib("wx/include/wx.hrl").
 
 
 -spec main(Args) -> any() when Args :: [string()].
@@ -10,11 +11,15 @@ main(Args) ->
 -spec cli() -> argparse:command().
 cli() ->
     #{
-      arguments => [#{name => username, type => string}],
+      arguments => [],
       handler => fun app/1
      }.
 
 
 -spec app(Args) -> ok when Args :: map().
-app(#{username := UserName}) ->
-    io:format("~p~n", [UserName]).
+app(#{}) ->
+    wx:new(),
+    Frame = wxFrame:new(wx:null(), ?wxID_ANY, "HOGE"),
+    wxFrame:show(Frame),
+    timer:sleep(infinity),
+    wx:destroy().
