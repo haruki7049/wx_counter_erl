@@ -26,7 +26,7 @@ app(#{}) ->
     wx:destroy().
 
 
--spec setup(Frame) -> ok when Frame :: wxWindow:wxWindow().
+-spec setup(Frame) -> any() when Frame :: wxWindow:wxWindow().
 setup(Frame) ->
     MenuBar = wxMenuBar:new(),
     File = wxMenu:new(),
@@ -39,7 +39,7 @@ setup(Frame) ->
     wxFrame:connect(Frame, close_window).
 
 
--spec loop(Frame) -> ok when Frame :: wxWindow:wxWindow().
+-spec loop(Frame) -> any() when Frame :: wxWindow:wxWindow().
 loop(Frame) ->
     receive
         #wx{event = #wxClose{}} ->
