@@ -28,17 +28,25 @@ app(#{}) ->
 
 -spec setup(Frame) -> ok when Frame :: wxWindow:wxWindow().
 setup(Frame) ->
-    wxFrame:connect(Frame, close_window),
-    ok.
+    MenuBar = wxMenuBar:new(),
+    File = wxMenu:new(),
+    wxMenu:append(File, ?wxID_CLOSE, "Close\tCtrl+W"),
+
+    wxMenuBar:append(MenuBar, File, "&File"),
+    wxFrame:setMenuBar(Frame, MenuBar),
+
+    wxFrame:connect(Frame, command_menu_selected),
+    wxFrame:connect(Frame, close_window).
 
 
 -spec loop(Frame) -> ok when Frame :: wxWindow:wxWindow().
 loop(Frame) ->
     receive
         #wx{event = #wxClose{}} ->
-            io:format("Closing window...~n"),
-            wxWindow:destroy(Frame),
-            ok;
+            wxWindow:close(Frame, []);
+
+        #wx{id=?wxID_CLOSE, event = #wxCommand{type = command_menu_selected}} ->
+            wxWindow:destroy(Frame);
 
         %% Log other events for debugging
         Msg ->
