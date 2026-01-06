@@ -20,6 +20,23 @@ cli() ->
 app(#{}) ->
     wx:new(),
     Frame = wxFrame:new(wx:null(), ?wxID_ANY, "HOGE"),
+    setup(Frame),
     wxFrame:show(Frame),
-    timer:sleep(infinity),
+    loop(Frame),
     wx:destroy().
+
+
+-spec setup(Frame) -> ok when Frame :: wxWindow:wxWindow().
+setup(Frame) ->
+    wxFrame:connect(Frame, close_window),
+    ok.
+
+
+-spec loop(Frame) -> ok when Frame :: wxWindow:wxWindow().
+loop(Frame) ->
+    receive
+        #wx{event = #wxClose{}} ->
+            io:format("Closing window...~n"),
+            wxWindow:destroy(Frame),
+            ok
+    end.
