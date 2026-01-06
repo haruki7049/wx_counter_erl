@@ -45,7 +45,7 @@ loop(Frame) ->
         #wx{event = #wxClose{}} ->
             wxWindow:close(Frame, []);
 
-        #wx{id=?wxID_CLOSE, event = #wxCommand{type = command_menu_selected}} ->
+        #wx{id = ?wxID_CLOSE, event = #wxCommand{type = command_menu_selected}} ->
             wxWindow:destroy(Frame);
 
         %% Log other events for debugging
