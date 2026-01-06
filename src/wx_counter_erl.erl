@@ -38,5 +38,10 @@ loop(Frame) ->
         #wx{event = #wxClose{}} ->
             io:format("Closing window...~n"),
             wxWindow:destroy(Frame),
-            ok
+            ok;
+
+        %% Log other events for debugging
+        Msg ->
+            io:format("Event received: ~p~n", [Msg]),
+            loop(Frame)
     end.
